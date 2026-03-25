@@ -54,25 +54,28 @@ function mostrarFase() {
 
   fase.opcoes.forEach((opcao, index) => {
     const btn = document.createElement("button");
-    btn.innerText = opcao;
-    btn.onclick = () => verificarResposta(index);
+    btn.innerHTML = `<span>${opcao}</span> <span class="iconeOpcao"></span>`;
+    btn.onclick = () => verificarResposta(index, btn);
     opcoesContainer.appendChild(btn);
   });
 
   atualizarProgresso();
 }
 
-function verificarResposta(indice) {
+function verificarResposta(indice, botaoClicado) {
   const fase = fases[faseAtual];
   const feedback = document.getElementById("feedback");
+  const botoes = document.querySelectorAll("#opcoes button");
+
+  botoes.forEach(b => b.disabled = true);
 
   if (indice === fase.correta) {
     pontos++;
-    feedback.innerHTML = `<img src="certo.png" class="iconeFeedback"> <span style="color:green;">Correto!</span> ${fase.impacto}`;
-    feedback.classList.add("show");
+    botaoClicado.querySelector(".iconeOpcao").innerText = "✔️";
+    botaoClicado.style.backgroundColor = "#c8e6c9";
+    feedback.innerHTML = `<span style="color:green;">Correto!</span> ${fase.impacto}`;
 
     setTimeout(() => {
-      feedback.classList.remove("show");
       faseAtual++;
       if (faseAtual < fases.length) {
         mostrarFase();
@@ -82,9 +85,19 @@ function verificarResposta(indice) {
     }, 3000);
 
   } else {
-    feedback.innerHTML = `<img src="errado.png" class="iconeFeedback"> <span style="color:red;">Errado!</span> ${fase.impacto}`;
-    feedback.classList.add("show");
-    setTimeout(() => feedback.classList.remove("show"), 3000);
+    botaoClicado.querySelector(".iconeOpcao").innerText = "❌";
+    botaoClicado.style.backgroundColor = "#ffcdd2";
+  
+    botoes[fase.correta].querySelector(".iconeOpcao").innerText = "✔️";
+    botoes[fase.correta].style.backgroundColor = "#c8e6c9";
+    feedback.innerHTML = `<span style="color:red;">Errado!</span> ${fase.impacto}`;
+
+    setTimeout(() => {
+      botoes.forEach(b => b.disabled = false);
+      botoes.forEach(b => b.querySelector(".iconeOpcao").innerText = "");
+      botoes.forEach(b => b.style.backgroundColor = "");
+      feedback.innerHTML = "";
+    }, 1500);
   }
 
   atualizarProgresso();
