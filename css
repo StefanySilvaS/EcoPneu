@@ -1,0 +1,153 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 0;
+  padding-top: 20px;
+}
+
+#jogoContainer {
+  background-color: #ffffff;
+  padding: 40px 20px 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  width: 95%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+#tituloApp {
+  font-size: 42px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+#pergunta {
+  font-size: 26px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#barraContainer {
+  width: 100%;
+  height: 25px;
+  background-color: #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#barraProgresso {
+  height: 100%;
+  width: 0%;
+  background-color: #000000;
+  border-radius: 12px;
+  transition: width 0.5s ease;
+}
+
+#imagemFase {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  margin: 25px 0;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+}
+
+#opcoes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+#opcoes button {
+  flex: 1 1 180px;
+  max-width: 300px;
+  padding: 18px 20px;
+  font-size: 20px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #28a745, #21a129);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#opcoes button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 14px rgba(0,0,0,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+#opcoes button:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+
+#feedback {
+  margin-top: 15px;
+  font-size: 16px;
+  min-height: 50px;
+  text-align: center;
+}
+#feedback {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#feedback.show {
+  opacity: 1;
+}
+.iconeFeedback {
+  width: 30px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+#feedback.correto {
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#feedback.errado {
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 8px;
+}
+#barraContainer {
+  width: 100%;
+  height: 25px;
+  background-color: #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+#barraProgresso {
+  background: linear-gradient(90deg, #000 0%, #555 50%, #000 100%);
+  background-size: 200% 100%;
+  animation: shine 2s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+#opcoes button.correto {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
