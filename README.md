@@ -32,5 +32,6 @@ EcoPneu é um projeto web responsivo que permite **agendar a coleta de pneus usa
 - LocalStorage (para histórico de coletas)
 - GitHub Pages (para hospedagem)
 
-Acesse o quiz online pelo GitHub Pages:  
-[https://stefanysilvas.github.io/CicloPneu/](https://stefanysilvas.github.io/CicloPneu/)
+Acesse online pelo GitHub Pages:  
+https://stefanysilvas.github.io/EcoPneu/ 
+
