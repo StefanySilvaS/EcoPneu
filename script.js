@@ -56,17 +56,48 @@ function mostrarDetalhe(etapa) {
   let div = document.getElementById(etapa);
   if (!div) return;
 
+  // Esconde se já estiver aberto
   if (div.style.display === "block") {
     div.style.display = "none";
     return;
   }
 
+  // Conteúdos de cada etapa com imagens
   let textos = {
-    coleta: "✔ Solicite a coleta pelo site<br>✔ Leve até borracharias<br>✔ Procure pontos de coleta na sua cidade",
-    recebimento: "✔ Pneus são armazenados corretamente<br>✔ Evita acúmulo de água e mosquitos",
-    triagem: "✔ Pneus bons → reutilização<br>♻️ Pneus danificados → reciclagem<br>❌ Sem uso → descarte correto",
-    transporte: "✔ Empresas especializadas fazem o transporte<br>✔ Caminhões levam até recicladoras",
-    reciclagem: "✔ Produção de asfalto ecológico<br>✔ Pisos de borracha<br>✔ Materiais reutilizados"
+    coleta: `
+  <strong>📍 Onde coletar:</strong><br>
+  - Borracharias parceiras<br>
+  - Pontos de coleta municipais<br>
+  - Empresas de logística reversa<br><br>
+  <img src="imagens/coleta1.jpg" alt="Borracharias" style="width:100%; border-radius:10px; margin-top:8px;">
+  <img src="imagens/coleta2.jpg" alt="Entrega de pneus" style="width:100%; border-radius:10px; margin-top:8px;">
+`,
+    recebimento: `
+  <strong>🏭 Recebimento e armazenamento:</strong><br>
+  - Pneus armazenados em galpões seguros<br>
+  - Evita acúmulo de água e mosquitos<br><br>
+  <img src="imagens/recebimento1.jpg" alt="Armazenamento seguro" style="width:100%; border-radius:10px; margin-top:8px;">
+`,
+    triagem: `
+      <strong>🔍 Triagem:</strong><br>
+      - Pneus em bom estado → reutilização<br>
+      - Pneus danificados → reciclagem<br>
+      - Destino correto evita impacto ambiental<br><br>
+      <img src="imagens/triagem1.jpg" alt="Triagem de pneus" style="width:100%; border-radius:10px; margin-top:8px;">
+    `,
+    transporte: `
+      <strong>🚚 Transporte:</strong><br>
+      - Empresas especializadas transportam os pneus<br>
+      - Caminhões ou carretas adequadas<br><br>
+      <img src="imagens/transporte1.jpg" alt="Transporte de pneus" style="width:100%; border-radius:10px; margin-top:8px;">
+    `,
+    reciclagem: `
+      <strong>♻️ Produtos reciclados:</strong><br>
+      - Pisos de borracha<br>
+      - Asfalto ecológico<br>
+      - Brinquedos ou mobiliário urbano<br><br>
+      <img src="imagens/reciclagem1.jpg" alt="Produtos reciclados" style="width:100%; border-radius:10px; margin-top:8px;">
+    `
   };
 
   div.innerHTML = textos[etapa];
