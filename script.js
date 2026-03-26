@@ -1,118 +1,85 @@
-const fases = [
-  {
-    pergunta: "O pneu está inservível. O que o consumidor deve fazer?",
-    opcoes: ["Jogar em terreno baldio", "Queimar o pneu", "Levar ao ponto de coleta"],
-    correta: 2,
-    impacto: "Descartar incorretamente causa acúmulo de água e dengue.",
-    imagem: "ponto_coleta.png"
-  },
-  {
-    pergunta: "O que acontece na borracheira?",
-    opcoes: ["Recebe e armazena pneus usados", "Recicla imediatamente", "Queima os pneus"],
-    correta: 0,
-    impacto: "Armazenamento adequado evita riscos ambientais.",
-    imagem: "borracheira.png"
-  },
-  {
-    pergunta: "Como os pneus são transportados após a borracheira?",
-    opcoes: ["Transportados para triagem", "Deixados na rua", "Queimados na borracharia"],
-    correta: 0,
-    impacto: "O transporte correto evita contaminação do solo e da água.",
-    imagem: "transporte.png"
-  },
-  {
-    pergunta: "O que acontece na triagem?",
-    opcoes: ["Separação por tipo e condição", "Queima para energia", "Jogar em aterro"],
-    correta: 0,
-    impacto: "A triagem é essencial para a reciclagem eficiente.",
-    imagem: "triagem.png"
-  },
-  {
-    pergunta: "Qual é o destino final dos pneus reciclados?",
-    opcoes: ["Produtos reciclados", "Areia", "Nada"],
-    correta: 0,
-    impacto: "Os pneus reciclados se transformam em produtos úteis.",
-    imagem: "produtos_reciclados.png"
+function iniciar() {
+  let form = document.getElementById("formulario");
+  form.style.display = "block";
+  form.style.animation = "aparecer 0.5s ease";
+  document.getElementById("btnIniciar").style.display = "none";
+  form.scrollIntoView({ behavior: "smooth" });
+}
+
+function agendarColeta() {
+  let nome = document.getElementById("nome").value;
+  let quantidade = document.getElementById("quantidade").value;
+  let tipo = document.getElementById("tipo").value;
+  let endereco = document.getElementById("endereco").value;
+  let data = document.getElementById("data").value;
+
+  if (nome === "" || quantidade === "" || endereco === "" || data === "" || tipo === "") {
+    alert("⚠️ Preencha todos os campos!");
+    return;
   }
-];
 
-let pontos = 0;
-let faseAtual = 0;
+  let mensagemDiv = document.getElementById("mensagem");
+  mensagemDiv.innerHTML = "✅ Coleta agendada com sucesso!";
+  mensagemDiv.style.animation = "aparecer 0.5s ease";
 
-function mostrarFase() {
-  const fase = fases[faseAtual];
-  const perguntaEl = document.getElementById("pergunta");
-  const imagemEl = document.getElementById("imagemFase");
-  const opcoesContainer = document.getElementById("opcoes");
-  const feedback = document.getElementById("feedback");
+  let novaColeta = { nome, quantidade, tipo, endereco, data };
+  let historico = JSON.parse(localStorage.getItem("historico")) || [];
+  historico.push(novaColeta);
+  localStorage.setItem("historico", JSON.stringify(historico));
 
-  perguntaEl.innerText = fase.pergunta;
-  imagemEl.src = fase.imagem;
+  mostrarHistorico();
 
-  opcoesContainer.innerHTML = "";
-  feedback.innerHTML = "";
+  document.getElementById("nome").value = "";
+  document.getElementById("quantidade").value = "";
+  document.getElementById("tipo").value = "";
+  document.getElementById("endereco").value = "";
+  document.getElementById("data").value = "";
+}
 
-  fase.opcoes.forEach((opcao, index) => {
-    const btn = document.createElement("button");
-    btn.innerHTML = `<span>${opcao}</span> <span class="iconeOpcao"></span>`;
-    btn.onclick = () => verificarResposta(index, btn);
-    opcoesContainer.appendChild(btn);
+function mostrarHistorico() {
+  let historico = JSON.parse(localStorage.getItem("historico")) || [];
+  let div = document.getElementById("historico");
+  div.innerHTML = "";
+
+  historico.forEach((item) => {
+    div.innerHTML += `
+      <div class="item-historico">
+        <strong>${item.nome}</strong> - ${item.quantidade} pneus (${item.tipo})<br>
+        📍 ${item.endereco}<br>
+        📅 ${item.data}
+      </div>
+    `;
   });
-
-  atualizarProgresso();
 }
 
-function verificarResposta(indice, botaoClicado) {
-  const fase = fases[faseAtual];
-  const feedback = document.getElementById("feedback");
-  const botoes = document.querySelectorAll("#opcoes button");
+function mostrarDetalhe(etapa) {
+  let div = document.getElementById(etapa);
+  if (!div) return;
 
-  botoes.forEach(b => b.disabled = true);
-
-  if (indice === fase.correta) {
-    pontos++;
-    botaoClicado.querySelector(".iconeOpcao").innerText = "✔️";
-    botaoClicado.style.backgroundColor = "#c8e6c9";
-    feedback.innerHTML = `<span style="color:green;">Correto!</span> ${fase.impacto}`;
-
-    setTimeout(() => {
-      faseAtual++;
-      if (faseAtual < fases.length) {
-        mostrarFase();
-      } else {
-        mostrarResultado();
-      }
-    }, 3000);
-
-  } else {
-    botaoClicado.querySelector(".iconeOpcao").innerText = "❌";
-    botaoClicado.style.backgroundColor = "#ffcdd2";
-  
-    botoes[fase.correta].querySelector(".iconeOpcao").innerText = "✔️";
-    botoes[fase.correta].style.backgroundColor = "#c8e6c9";
-    feedback.innerHTML = `<span style="color:red;">Errado!</span> ${fase.impacto}`;
-
-    setTimeout(() => {
-      botoes.forEach(b => b.disabled = false);
-      botoes.forEach(b => b.querySelector(".iconeOpcao").innerText = "");
-      botoes.forEach(b => b.style.backgroundColor = "");
-      feedback.innerHTML = "";
-    }, 1500);
+  if (div.style.display === "block") {
+    div.style.display = "none";
+    return;
   }
 
-  atualizarProgresso();
+  let textos = {
+    coleta: "✔ Solicite a coleta pelo site<br>✔ Leve até borracharias<br>✔ Procure pontos de coleta na sua cidade",
+    recebimento: "✔ Pneus são armazenados corretamente<br>✔ Evita acúmulo de água e mosquitos",
+    triagem: "✔ Pneus bons → reutilização<br>♻️ Pneus danificados → reciclagem<br>❌ Sem uso → descarte correto",
+    transporte: "✔ Empresas especializadas fazem o transporte<br>✔ Caminhões levam até recicladoras",
+    reciclagem: "✔ Produção de asfalto ecológico<br>✔ Pisos de borracha<br>✔ Materiais reutilizados"
+  };
+
+  div.innerHTML = textos[etapa];
+  div.style.display = "block";
 }
 
-function atualizarProgresso() {
-  const barra = document.getElementById("barraProgresso");
-  barra.style.width = (faseAtual / fases.length) * 100 + "%";
+function voltarInicio() {
+  let form = document.getElementById("formulario");
+  form.style.display = "none";
+  document.getElementById("btnIniciar").style.display = "block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function mostrarResultado() {
-  document.body.innerHTML = `<div style="text-align:center;margin-top:50px;">
-    <h2>Fim do jogo!</h2>
-    <p>Pontos: ${pontos} de ${fases.length}</p>
-  </div>`;
-}
-
-window.onload = mostrarFase;
+window.onload = function () {
+  mostrarHistorico();
+};
