@@ -163,6 +163,23 @@ button:active {
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+#btn-apagar {
+  width: 100%;
+  padding: 14px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+#btn-apagar:hover { background: #c0392b; }
+#btn-apagar:active { transform: scale(0.96); }
+
 @keyframes aparecer {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -240,10 +257,10 @@ button:active {
 
 <h2>📜 Histórico</h2>
 <div id="historico"></div>
-<button style="margin-top:12px; background:#e74c3c;" onclick="apagarHistorico()">🗑️ Apagar Histórico</button>
+<button id="btn-apagar" onclick="apagarHistorico()">🗑️ Apagar histórico</button>
 
 </div>
-<button onclick="apagarHistorico()" style="margin-top:12px; background:#e74c3c;">🗑️ Apagar histórico</button>
+
 <script>
 function agendarColeta() {
   let nome = document.getElementById("nome").value;
@@ -291,13 +308,6 @@ function mostrarHistorico() {
   });
 }
 
-function apagarHistorico() {
-  if(confirm("⚠️ Tem certeza que deseja apagar todo o histórico?")) {
-    localStorage.removeItem("historico");
-    mostrarHistorico();
-  }
-}
-
 function mostrarDetalhe(etapa) {
   let div = document.getElementById(etapa);
   if (!div) return;
@@ -309,13 +319,14 @@ function mostrarDetalhe(etapa) {
 
   let textos = {
     coleta: `
-  <strong>📍 Onde coletar:</strong><br>
-  - Borracharias parceiras<br>
-  - Pontos de coleta municipais<br>
-  - Empresas de logística reversa<br><br>
-  <img src="imagens/coleta1.jpg" alt="Borracharias" style="width:100%; border-radius:10px; margin-top:8px;">
-  <img src="imagens/coleta2.jpg" alt="Pontos de coleta" style="width:100%; border-radius:10px; margin-top:8px;">
-`,
+      <strong>📍 Onde coletar:</strong><br>
+      - Borracharias parceiras<br>
+      - Pontos de coleta municipais<br>
+      - Empresas de logística reversa<br><br>
+      <img src="imagens/coleta1.jpg" alt="Borracharias" style="width:100%; border-radius:10px; margin-top:8px;">
+      <img src="imagens/coleta2.jpg" alt="Pontos de coleta" style="width:100%; border-radius:10px; margin-top:8px;">
+      <img src="imagens/coleta3.jpg" alt="Pontos de coleta municipais" style="width:100%; border-radius:10px; margin-top:8px;">
+    `,
     recebimento: `
       <strong>🏭 Recebimento e armazenamento:</strong><br>
       - Pneus armazenados em galpões seguros<br>

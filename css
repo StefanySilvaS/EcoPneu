@@ -210,3 +210,19 @@ button:active {
   box-sizing: border-box; 
   margin-top: 16px;
 }
+#btn-apagar {
+  width: 100%;
+  padding: 14px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+#btn-apagar:hover { background: #c0392b; }
+#btn-apagar:active { transform: scale(0.96); }
