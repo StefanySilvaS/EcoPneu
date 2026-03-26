@@ -1,73 +1,36 @@
-# CicloPneu – Quiz sobre Reciclagem de Pneus
+# 🌱 EcoPneu
 
-## 🎯 Objetivo do Projeto
-
-O **CicloPneu** é um quiz educativo sobre o **ciclo de reciclagem de pneus**, destinado a conscientizar usuários sobre o descarte correto e os impactos ambientais.  
-O quiz apresenta perguntas, imagens ilustrativas e feedback visual de **certo/errado** para cada resposta.
+EcoPneu é um projeto web responsivo que permite **agendar a coleta de pneus usados** e acompanhar **as etapas da reciclagem**, incentivando práticas sustentáveis e conscientes.
 
 ---
 
-## 🕹 Como Jogar
+## 📋 Funcionalidades
 
-1. Abra o quiz pelo link do GitHub Pages:  
-   [https://stefanysilvas.github.io/CicloPneu/](https://stefanysilvas.github.io/CicloPneu/)
-
-2. Leia a pergunta e escolha a opção correta clicando no botão.
-
-3. O sistema mostra:  
-   - ✅ Correto (com explicação)  
-   - ❌ Errado (opção correta marcada, permitindo nova tentativa)
-
-4. Ao final, o quiz mostra a pontuação total.
-
----
-
-## 📂 Estrutura do Projeto
-
-
-CicloPneu/
-│
-├─ index.html # Página principal do quiz
-├─ script.js # Script com lógica do quiz e feedback
-├─ style.css # Estilo do quiz
-├─ ponto_coleta.png # Imagem da fase 1
-├─ borracheira.png # Imagem da fase 2
-├─ transporte.png # Imagem da fase 3
-├─ triagem.png # Imagem da fase 4
-└─ produtos_reciclados.png # Imagem da fase 5
-
+- Agendar coleta de pneus com:
+  - Nome completo
+  - Endereço
+  - Data
+  - Quantidade de pneus
+  - Tipo de veículo
+- Histórico das coletas agendadas (armazenado no navegador com LocalStorage)
+- Visualizar as **etapas da reciclagem** em cards interativos:
+  - Coleta
+  - Recebimento
+  - Triagem
+  - Transporte
+  - Reciclagem
+- Layout **mobile-friendly** e **responsivo**
+- Feedback visual ao agendar coleta
 
 ---
 
-## 🛠 Tecnologias Usadas
+## 💻 Tecnologias Utilizadas
 
-- HTML5  
-- CSS3  
-- JavaScript (ES6)  
-
----
-
-## 📌 Recursos e Funcionalidades
-
-- Feedback visual de **certo e errado** ao lado das opções.  
-- Permite múltiplas tentativas se o usuário errar.  
-- Barra de progresso indicando avanço no quiz.  
-- Layout responsivo para desktop e dispositivos móveis.  
-- Imagens ilustrativas para cada fase do ciclo de reciclagem.  
-
----
-
-## 🔗 Link do Jogo
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- LocalStorage (para histórico de coletas)
+- GitHub Pages (para hospedagem)
 
 Acesse o quiz online pelo GitHub Pages:  
 [https://stefanysilvas.github.io/CicloPneu/](https://stefanysilvas.github.io/CicloPneu/)
-
----
-
-## 👩‍💻 Autora
-
-**Stefany Souza** – Estudante de Front-end apaixonada por criar interfaces bonitas e experiências de usuário intuitivas.  
-
-- Email: stefany@email.com
-
-https://stefanysilvas.github.io/CicloPneu/
