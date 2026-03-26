@@ -114,3 +114,9 @@ function voltarInicio() {
 window.onload = function () {
   mostrarHistorico();
 };
+function apagarHistorico() {
+  if(confirm("Tem certeza que deseja apagar todo o histórico?")) {
+    localStorage.removeItem("historico");
+    mostrarHistorico();
+  }
+}
