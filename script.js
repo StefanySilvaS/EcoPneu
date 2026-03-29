@@ -13,15 +13,20 @@ function agendarColeta() {
   let nome = document.getElementById("nome").value;
   let quantidade = document.getElementById("quantidade").value;
   let tipo = document.getElementById("tipo").value;
-  let endereco = document.getElementById("endereco").value;
+  let cep = document.getElementById("cep").value;
+  let rua = document.getElementById("rua").value;
+  let numero = document.getElementById("numero").value;
+  let bairro = document.getElementById("bairro").value;
+  let cidade = document.getElementById("cidade").value;
   let data = document.getElementById("data").value;
 
-  if (!nome || !quantidade || !tipo || !endereco || !data) {
+  // ✅ validação correta
+  if (!nome || !quantidade || !tipo || !cep || !rua || !numero || !bairro || !cidade || !data) {
     alert("⚠️ Preencha todos os campos!");
     return;
   }
 
-  let novaColeta = { nome, quantidade, tipo, endereco, data };
+  let novaColeta = { nome, quantidade, tipo, cep, rua, numero, bairro, cidade, data };
 
   let historico = JSON.parse(localStorage.getItem("historico") || "[]");
 
@@ -33,11 +38,15 @@ function agendarColeta() {
 
   document.getElementById("mensagem").innerHTML = "✅ Coleta agendada com sucesso!";
 
-  // limpar campos
+  // ✅ limpar campos (CORRETO)
   document.getElementById("nome").value = "";
   document.getElementById("quantidade").value = "";
   document.getElementById("tipo").value = "";
-  document.getElementById("endereco").value = "";
+  document.getElementById("cep").value = "";
+  document.getElementById("rua").value = "";
+  document.getElementById("numero").value = "";
+  document.getElementById("bairro").value = "";
+  document.getElementById("cidade").value = "";
   document.getElementById("data").value = "";
 }
 
@@ -53,7 +62,8 @@ function mostrarHistorico() {
     div.innerHTML += `
       <div class="item-historico">
         <strong>${item.nome}</strong> - ${item.quantidade} pneus (${item.tipo})<br>
-        📍 ${item.endereco}<br>
+        📍 ${item.rua}, Nº ${item.numero} - ${item.bairro}<br>
+        🏙️ ${item.cidade} - CEP: ${item.cep}<br>
         📅 ${item.data}
       </div>
     `;
@@ -107,6 +117,30 @@ function apagarHistorico() {
     localStorage.removeItem("historico");
     mostrarHistorico();
   }
+}
+
+// 🔥 CEP automático (não esquece disso!)
+function buscarCEP() {
+  let cep = document.getElementById("cep").value.replace(/\D/g, "");
+
+  if (cep.length !== 8) {
+    alert("CEP inválido!");
+    return;
+  }
+
+  fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(res => res.json())
+    .then(dados => {
+      if (dados.erro) {
+        alert("CEP não encontrado!");
+        return;
+      }
+
+      document.getElementById("rua").value = dados.logradouro;
+      document.getElementById("bairro").value = dados.bairro;
+      document.getElementById("cidade").value = dados.localidade;
+    })
+    .catch(() => alert("Erro ao buscar CEP"));
 }
 
 window.onload = function () {

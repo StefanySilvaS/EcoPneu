@@ -107,8 +107,15 @@ button:hover { background: #27ae60; }
 
 <div id="formulario" class="form-card">
   <h2>📋 Agendar Coleta</h2>
+
   <input type="text" id="nome" placeholder="Nome completo">
-  <input type="text" id="endereco" placeholder="Endereço">
+
+  <input type="text" id="cep" placeholder="CEP" onblur="buscarCEP()">
+  <input type="text" id="rua" placeholder="Rua">
+  <input type="text" id="numero" placeholder="Número">
+  <input type="text" id="bairro" placeholder="Bairro">
+  <input type="text" id="cidade" placeholder="Cidade">
+
   <input type="date" id="data">
   <input type="number" id="quantidade" placeholder="Quantidade de pneus">
 
@@ -134,18 +141,48 @@ button:hover { background: #27ae60; }
 
 <script>
 
+// BUSCAR CEP 🔥
+function buscarCEP() {
+  let cep = document.getElementById("cep").value.replace(/\D/g, "");
+
+  if (cep.length !== 8) {
+    alert("CEP inválido!");
+    return;
+  }
+
+  fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(res => res.json())
+    .then(dados => {
+      if (dados.erro) {
+        alert("CEP não encontrado!");
+        return;
+      }
+
+      document.getElementById("rua").value = dados.logradouro;
+      document.getElementById("bairro").value = dados.bairro;
+      document.getElementById("cidade").value = dados.localidade;
+    })
+    .catch(() => alert("Erro ao buscar CEP"));
+}
+
 // AGENDAR
 function agendarColeta() {
   let nome = document.getElementById("nome").value;
+  let cep = document.getElementById("cep").value;
+  let rua = document.getElementById("rua").value;
+  let numero = document.getElementById("numero").value;
+  let bairro = document.getElementById("bairro").value;
+  let cidade = document.getElementById("cidade").value;
+  let data = document.getElementById("data").value;
   let quantidade = document.getElementById("quantidade").value;
   let tipo = document.getElementById("tipo").value;
-  let endereco = document.getElementById("endereco").value;
-  let data = document.getElementById("data").value;
 
-  if (!nome || !quantidade || !tipo || !endereco || !data) {
+  if (!nome || !cep || !rua || !numero || !bairro || !cidade || !data || !quantidade || !tipo) {
     alert("⚠️ Preencha todos os campos!");
     return;
   }
+
+  let endereco = `${rua}, ${numero} - ${bairro}, ${cidade} (${cep})`;
 
   let novaColeta = { nome, quantidade, tipo, endereco, data };
 
@@ -159,11 +196,16 @@ function agendarColeta() {
 
   document.getElementById("mensagem").innerHTML = "✅ Coleta agendada com sucesso!";
 
+  // limpar campos
   document.getElementById("nome").value = "";
+  document.getElementById("cep").value = "";
+  document.getElementById("rua").value = "";
+  document.getElementById("numero").value = "";
+  document.getElementById("bairro").value = "";
+  document.getElementById("cidade").value = "";
+  document.getElementById("data").value = "";
   document.getElementById("quantidade").value = "";
   document.getElementById("tipo").value = "";
-  document.getElementById("endereco").value = "";
-  document.getElementById("data").value = "";
 }
 
 // MOSTRAR HISTÓRICO
@@ -184,13 +226,13 @@ function mostrarHistorico() {
   });
 }
 
-// APAGAR HISTÓRICO (ESSA É A CHAVE)
+// APAGAR HISTÓRICO
 function apagarHistorico() {
   let confirmar = confirm("Tem certeza que deseja apagar todo o histórico?");
 
   if (confirmar) {
     localStorage.removeItem("historico");
-    document.getElementById("historico").innerHTML = "";
+    mostrarHistorico();
   }
 }
 
